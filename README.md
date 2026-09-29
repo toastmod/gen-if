@@ -15,7 +15,6 @@ use gen_if::{GenIfConnection, Res, gen_if};
 async fn main() -> Res<()> {
 
     // Create a new connection to an OpenAI-compatible endpoint
-    // let gemma4 = GenIfConnection::new("http://localhost:11434", "gemma4");
     let gemma4 = GenIfConnection::new("http://localhost:11434", "gemma4");
 
     // User can enter any word...
