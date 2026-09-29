@@ -9,21 +9,23 @@ This is an if statement that instead of directly evaluating a boolean expression
 ## Example
 ```rust
 use copilot_interceptor::prelude::tokio;
-use gen_if::{Res, gen_if};
+use gen_if::{GenIfConnection, Res, gen_if};
 
 #[tokio::main]
 async fn main() -> Res<()> {
 
+    // Create a new connection to an OpenAI-compatible endpoint
+    // let gemma4 = GenIfConnection::new("http://localhost:11434", "gemma4");
+    let gemma4 = GenIfConnection::new("http://desktop-ttjki31:10000", "gemma4");
+
     // User can enter any word...
     let mut my_color = String::new();
     std::io::stdin().read_line(&mut my_color)?;
-
-    // Replace line endings
     my_color = my_color.replace('\n',"").replace('\r', "");
     
     // Use gemma4 to evaluate if the statement is true or false.
     gen_if! { 
-        ["gemma4"] if ("{my_color} is a color") {
+        [gemma4] if ("{my_color} is a color") {
             // The true branch...
             println!("{} is a color", my_color);
         } else {
