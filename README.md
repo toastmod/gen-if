@@ -16,7 +16,7 @@ async fn main() -> Res<()> {
 
     // Create a new connection to an OpenAI-compatible endpoint
     // let gemma4 = GenIfConnection::new("http://localhost:11434", "gemma4");
-    let gemma4 = GenIfConnection::new("http://desktop-ttjki31:10000", "gemma4");
+    let gemma4 = GenIfConnection::new("http://localhost:11434", "gemma4");
 
     // User can enter any word...
     let mut my_color = String::new();
