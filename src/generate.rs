@@ -15,6 +15,7 @@ use copilot_interceptor::{
 use serde_json::json;
 
 pub async fn generate(
+    host: &str,
     headers: HeaderMap,
     mut request_body: OpenAiRequest,
     stream_tx: Option<&Sender<Result<Event, Infallible>>>
@@ -24,7 +25,7 @@ pub async fn generate(
         request_body.stream = true;
         match
             client
-                .post("http://desktop-ttjki31:10000/v1/chat/completions")
+                .post(format!("{}/v1/chat/completions", host))
                 .headers(headers)
                 .header("Connection", "keep-alive")
                 .json(&request_body)

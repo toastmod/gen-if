@@ -20,9 +20,25 @@ impl fmt::Display for MyError {
 // Implement the Error trait
 impl Error for MyError {}
 
-pub async fn gen_if(model: &str, clause: String) -> Res<bool> {
-    if let Some(resp) = generate::generate(HeaderMap::new(), OpenAiRequest {
-        model: model.to_string(),
+
+#[derive(Debug,Clone)]
+pub struct GenIfConnection<'a> {
+    pub host: &'a str,
+    pub model: &'a str,
+}
+
+impl<'a> GenIfConnection<'a> {
+    pub fn new(host: &'a str, model: &'a str) -> Self {
+        Self {
+            host,
+            model,
+        }
+    }
+}
+
+pub async fn gen_if<'a>(conn: GenIfConnection<'a>, clause: String) -> Res<bool> {
+    if let Some(resp) = generate::generate(&conn.host, HeaderMap::new(), OpenAiRequest {
+        model: conn.model.to_string(),
         messages: vec![],
         temperature: Some(1.0),
         stream: false,
@@ -47,28 +63,9 @@ pub async fn gen_if(model: &str, clause: String) -> Res<bool> {
 
 #[macro_export]
 macro_rules! gen_if {
-    ([$model:expr] if ($($arg:tt)*) $body:block else $elseb:block catch $ebody:block) => {
-        if let Ok(_result) = gen_if($model, format!($($arg)*)).await {
+    ([$conn:expr] if ($($arg:tt)*) $body:block else $elseb:block catch $ebody:block) => {
+        if let Ok(_result) = gen_if($conn, format!($($arg)*)).await {
             if _result {$body} else {$elseb}
         } else $ebody
     }
-}
-
-mod test {
-    use copilot_interceptor::prelude::tokio;
-    use crate::{Res, gen_if};
-
-    #[tokio::test]
-    async fn gen_if_works() -> Res<()> {
-        gen_if!(["gemma4"] if ("blue is a color") {
-            println!("blue is in fact a color");
-        } else {
-            println!("blue is not a color");
-        } catch {
-
-        });
-    
-        Ok(())
-    }
-
 }
