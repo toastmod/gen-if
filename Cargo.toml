@@ -1,0 +1,9 @@
+[package]
+name = "gen-if"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+copilot-interceptor = {git = "https://github.com/toastmod/copilot-interceptor"}
+serde = "1.0.229"
+serde_json = "1.0.151"
