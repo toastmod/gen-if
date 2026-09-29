@@ -1,7 +1,7 @@
 # A Generative If Statement for Rust
 *Why vibe code when you can code the vibes?*
 
-This is a proof-of-concept for fun inspired by Jev, except it uses your local LLM (that supports structured output) instead of an evaluation model.
+This is a proof-of-concept just for fun inspired by [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev).<br>Jev uses an evaluation model (which is better for this usecase) while this POC uses an LLM.
 
 ## What is this?
 This is an if statement that instead of directly evaluating a boolean expression, you can evaluate whatever you want to either `true` or `false`. 
