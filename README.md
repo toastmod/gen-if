@@ -4,7 +4,7 @@
 This is a proof-of-concept just for fun inspired by [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev).<br>Jev uses an evaluation model (which is better for this usecase) while this POC uses an LLM.
 
 ## What is this?
-This is an if statement that instead of directly evaluating a boolean expression, you can evaluate whatever you want to either `true` or `false`. 
+This is an if statement that requests a structured output (a single boolean) from an LLM, given some prompt string. Under the hood the input prompt isn't the user message but rather the description for the structured output's boolean parameter. 
 
 ## Example
 ```rust
